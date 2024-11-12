@@ -5,39 +5,35 @@
             <div class="col-md-9">
                 <div class="col-md-12 page-body">
                   <div class="row">
+                    
                     <div class="sub-title">
                       <h2>My Blog</h2>
                     </div>
-      
                     <div class="col-md-12 content-page">
+                      {% for post in posts %}
                       <!-- Blog Post Start -->
                       <div class="col-md-12 blog-post">
                         <div class="post-title">
                           <a href="single.html">
                             <h1>
-                              How to make your company website based on bootstrap
-                              framework on localhost?
+                              {{ post.title }}
                             </h1>
                           </a>
                         </div>
                         <div class="post-info">
-                          <span>November 23, 2016 / by
-                            <a href="#" target="_blank">Alex Parker</a></span>
+                          <span>{{ post.created_at }} / {{ post.counted_views }}
                         </div>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                          Molestiae ut ratione similique temporibus tempora dicta
-                          soluta? Qui hic, voluptatem nemo quo corporis dignissimos
-                          voluptatum debitis cumque fugiat mollitia quasi quod.
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                          Molestiae ut ratione similique.
+                          {{ post.content }}
                         </p>
-                        <a href="single.html" class="button button-style button-anim fa fa-long-arrow-right"><span>Read
+                        <a href="{% url 'post_detail' post.id %}" class="button button-style button-anim fa fa-long-arrow-right"><span>Read
                             More</span></a>
                       </div>
+                      {% endfor %}
                       <!-- Blog Post End -->
                     </div>
                   </div>
+                  
                 </div>
       
                 <!-- Footer Start -->

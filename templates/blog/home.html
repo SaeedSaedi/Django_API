@@ -21,7 +21,7 @@
                           </a>
                         </div>
                         <div class="post-info">
-                          <span>{{ post.created_at }} / views: {{ post.counted_views }}
+                          <span>{{ post.created_at }} / views: {{ post.counted_views }} / author: {{ post.author.get_full_name }}
                         </div>
                         <p>
                           {{ post.content }}

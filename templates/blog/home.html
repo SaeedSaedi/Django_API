@@ -26,6 +26,7 @@
                         <p>
                           {{ post.content }}
                         </p>
+                        <img class="post-image" src="{{ post.image.url }}" alt="">
                         <a href="{% url 'post_detail' post.id %}" class="button button-style button-anim fa fa-long-arrow-right"><span>Read
                             More</span></a>
                       </div>

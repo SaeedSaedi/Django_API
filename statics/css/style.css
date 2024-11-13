@@ -1737,3 +1737,9 @@ blockquote {
 .uipasta-credit a:hover {
     color: #333333;
 }
+
+.post-image{
+    width: 300px;
+    height: 150px;
+    float: right;
+}

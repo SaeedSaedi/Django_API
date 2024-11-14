@@ -1,5 +1,5 @@
 <ul>
     {% for post in posts %}
-    <a href="{% url "blog:post_detail" post.id %}"><li>{{ post.title }}</li></a>
+    <a href="{% url "blog:post_detail" post.id %}"><li>{{ post.title }} | Views: {{post.counted_views}}</li></a>
     {% endfor %}
 </ul>

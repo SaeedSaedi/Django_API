@@ -18,6 +18,6 @@ def snippet(v, n):
     return  v[:n] + "..."
 
 @register.inclusion_tag('blog/popularposts.html')
-def popularposts():
-    posts = Post.objects.filter(status=1).order_by('-counted_views')[0:3]
+def popularposts(n=3):
+    posts = Post.objects.filter(status=1).order_by('-counted_views')[0:n]
     return {'posts':posts}

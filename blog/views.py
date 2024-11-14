@@ -9,7 +9,11 @@ def index(request):
     return render(request, 'blog/home.html',context={'posts':post})
 
 def post_single(request,post_id):
-    post = get_object_or_404(Post,id=post_id,status=1)
+    now = timezone.now()
+    post = get_object_or_404(Post,id=post_id,status=1,published_at__lte=now)
+    next_post = Post.objects.filter(id__gt=post.id,status=1).order_by('id').first()
+    prev_post = Post.objects.filter(id__lt=post.id,status=1).order_by('-id').first()
+    
     post.counted_views += 1
     post.save()
-    return render(request, 'blog/single.html',context={'post':post})
+    return render(request, 'blog/single.html',context={'post':post,'next_post':next_post,'prev_post':prev_post})

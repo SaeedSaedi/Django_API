@@ -16,5 +16,15 @@
     
     <p>{{ post.content }}</p>
     <img class="post-image" src="{{ post.image.url }}" alt="">
+    {% if next_post %}
+    <div class="next-post">
+        <a href="{% url 'post_detail' next_post.id %}">Next post: {{ next_post.title}}</a>
+    </div>
+    {% endif %}
+    {% if prev_post %}
+    <div class="prev_post">
+        <a href="{% url 'post_detail' prev_post.id %}">Previous post: {{ prev_post.title }}</a>
+    </div>
+    {% endif %}
  
 {% endblock %}

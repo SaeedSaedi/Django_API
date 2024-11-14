@@ -1743,3 +1743,13 @@ blockquote {
     height: 150px;
     float: right;
 }
+.include{
+    clear: both;
+    height: 100px;
+    background: #d4d4d4;
+    padding-top: 10px;
+}
+.include p{
+    margin: 0 auto;
+    width:fit-content;
+}

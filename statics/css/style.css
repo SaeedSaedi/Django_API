@@ -1753,3 +1753,9 @@ blockquote {
     margin: 0 auto;
     width:fit-content;
 }
+.include div.right{
+    float: right;
+}
+.include div.left{
+    float: left;
+}

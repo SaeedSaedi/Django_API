@@ -1,5 +1,11 @@
 {% load blog_tags %}
 <div class="include"><p>This section include from include_test {{post.created_at }}</p>
-<h5>popular posts:</h5>
-{% popularposts 2 %}
+<div class="left">
+    <h5>popular posts:</h5>
+    {% popularposts 2 %}
+</div>
+<div class="right">
+    <h5>categories :</h5>
+    {% post_category %}
+</div>
 </div>

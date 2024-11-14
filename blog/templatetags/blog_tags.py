@@ -1,5 +1,6 @@
+from unicodedata import category
 from django import template
-from blog.models import Post
+from blog.models import Category, Post
 register = template.Library()
 
 @register.simple_tag(name="totalposts")
@@ -21,3 +22,13 @@ def snippet(v, n):
 def popularposts(n=3):
     posts = Post.objects.filter(status=1).order_by('-counted_views')[0:n]
     return {'posts':posts}
+
+@register.inclusion_tag('blog/post-category.html')
+def post_category():
+    posts = Post.objects.filter(status=1)
+    categories = Category.objects.all()
+    response = {}
+    for name in categories:
+        response[name]= posts.filter(category=name).count()
+        
+    return {'category': response}

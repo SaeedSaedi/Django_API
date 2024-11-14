@@ -26,6 +26,6 @@
         <a href="{% url 'blog:post_detail' prev_post.id %}">Previous post: {{ prev_post.title }}</a>
     </div>
     {% endif %}
-    <p>{% hello %}</p>
+    <p>total posts: {% totalposts %}</p>
  
 {% endblock %}

@@ -17,3 +17,9 @@ def post_single(request,post_id):
     post.counted_views += 1
     post.save()
     return render(request, 'blog/single.html',context={'post':post,'next_post':next_post,'prev_post':prev_post})
+
+def blog_category(request,cat_name):
+    now = timezone.now()
+    posts = Post.objects.filter(status=1,published_at__lte=now)
+    posts = posts.filter(category__name=cat_name)
+    return render(request, 'blog/home.html',context={'posts':posts})

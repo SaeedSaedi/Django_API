@@ -7,7 +7,7 @@
                   <div class="row">
                     
                     <div class="sub-title">
-                      <h2>My Blog</h2>
+                      <h2><a href="{% url 'blog:index' %}">My Blog</a></h2>
                     </div>
                     <div class="col-md-12 content-page">
                       {% for post in posts %}
@@ -19,7 +19,7 @@
                             </h1>
                         </div>
                         <div class="post-info">
-                          <span>{{ post.created_at|date:"M Y" }} / views: {{ post.counted_views }} / author: {{ post.author.get_full_name }} / category: {{ post.category.all|join:"," }} </span>
+                          <span>{{ post.created_at|date:"M Y" }} / views: {{ post.counted_views }} / author: {{ post.author.get_full_name }} / category: {% for category in post.category.all %} <a href="{% url "blog:category" category.name %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
                         </div>
                         <p>
                           {{ post.content|truncatewords:50 }}

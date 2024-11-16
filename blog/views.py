@@ -23,3 +23,7 @@ def post_single(request,post_id):
     post.save()
     return render(request, 'blog/single.html',context={'post':post,'next_post':next_post,'prev_post':prev_post})
 
+def blog_search(request):
+    search_query = request.GET.get('q','')
+    posts = Post.objects.filter(status=1,content__icontains=search_query)
+    return render(request, 'blog/home.html',context={'posts':posts})

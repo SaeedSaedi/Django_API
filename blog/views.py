@@ -3,11 +3,14 @@ from django.utils import timezone
 from blog.models import Post
 
 # Create your views here.
-def index(request,cat_name=None):
+def index(request,cat_name=None,username=None):
     now = timezone.now()
     posts = Post.objects.filter(status=1,published_at__lte=now)
     if cat_name:
         posts = posts.filter(category__name=cat_name)
+    if username:
+        posts = posts.filter(author__username=username)
+    
     return render(request, 'blog/home.html',context={'posts':posts})
 
 def post_single(request,post_id):

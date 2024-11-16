@@ -3,10 +3,12 @@ from django.utils import timezone
 from blog.models import Post
 
 # Create your views here.
-def index(request):
+def index(request,cat_name=None):
     now = timezone.now()
-    post = Post.objects.filter(status=1,published_at__lte=now)
-    return render(request, 'blog/home.html',context={'posts':post})
+    posts = Post.objects.filter(status=1,published_at__lte=now)
+    if cat_name:
+        posts = posts.filter(category__name=cat_name)
+    return render(request, 'blog/home.html',context={'posts':posts})
 
 def post_single(request,post_id):
     now = timezone.now()
@@ -18,8 +20,3 @@ def post_single(request,post_id):
     post.save()
     return render(request, 'blog/single.html',context={'post':post,'next_post':next_post,'prev_post':prev_post})
 
-def blog_category(request,cat_name):
-    now = timezone.now()
-    posts = Post.objects.filter(status=1,published_at__lte=now)
-    posts = posts.filter(category__name=cat_name)
-    return render(request, 'blog/home.html',context={'posts':posts})

@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from blog.models import Post
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request,cat_name=None,username=None):
@@ -10,6 +11,10 @@ def index(request,cat_name=None,username=None):
         posts = posts.filter(category__name=cat_name)
     if username:
         posts = posts.filter(author__username=username)
+    
+    posts = Paginator(posts,2)
+    page_number = request.GET.get('page',1)
+    posts = posts.get_page(page_number)
     
     return render(request, 'blog/home.html',context={'posts':posts})
 

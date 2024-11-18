@@ -1759,3 +1759,52 @@ blockquote {
 .include div.left{
     float: left;
 }
+
+div.last_post{
+    width: 100%;
+    background: #d4d4d4;
+    padding: 10px;
+    height: 350px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+div.last_post > p{
+    width: fit-content;
+    margin: 0 auto;
+}
+div.last_post div.post{
+    background: #938e8e;
+    padding: 10px;
+    width: 251px;
+    height: 250px;
+    margin: 7px;
+    float: left;
+}
+div.last_post div.post img{
+
+    width: 230px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+div.last_post div.post a{
+
+    width: fit-content;
+    background-color:#0077b5;
+    padding: 4px;
+
+}
+div.clear{
+    clear: both;
+}
+
+span.page-links > a{
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #08a6f3;
+    float: left;
+    margin-left: 2px;
+}
+span.page-links > a:first-child{
+    margin-left: 390px;
+}

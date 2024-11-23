@@ -1808,3 +1808,30 @@ span.page-links > a{
 span.page-links > a:first-child{
     margin-left: 390px;
 }
+
+.slider-container {
+    width: 800px; 
+    overflow: hidden;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.post {
+    width: 251px; 
+    flex-shrink: 0;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.page-links a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+}

@@ -40,3 +40,8 @@ def post_category():
         response[name] = posts.filter(category=name).count()
 
     return {"category": response}
+
+
+@register.simple_tag(name="get_last_posts")
+def get_last_post():
+    return Post.objects.filter(status=1).order_by("-created_at")[:6]

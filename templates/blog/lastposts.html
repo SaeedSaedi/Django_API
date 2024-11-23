@@ -1,22 +1,67 @@
 {% load blog_tags %}
-<div class="last_post"><p>Last Posts in our blog</p>
+<div class="last_post">
+    <p>Last Posts in our blog</p>
     <p>last post from this blog show here</p>
-    {% get_posts page_number=request.GET.page|default:1 as posts %}
-    {% for post in posts %}
-    <div class="post">
-        <img src="{{ post.image.url }}" alt="">
-        <div class="category">
-            {% for category in post.category.all %} <a href="{% url "blog:category" category.name %}">{{ category.name }}</a>{% if not forloop.last %} {% endif %}{% endfor %}
+    {% get_last_posts as posts %}
+    <div class="slider-container">
+        <div class="slider">
+            {% for post in posts %}
+            <div class="post">
+                <img src="{{ post.image.url }}" alt="">
+                <div class="category">
+                    {% for category in post.category.all %}
+                        <a href="{% url "blog:category" category.name %}">{{ category.name }}</a>
+                        {% if not forloop.last %} {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="title"><h5><a href="{% url "blog:post_detail" post.id %}">{{ post.title }}</a></h5></div>
+                <div class="content"><p>{{ post.content|truncatewords:10 }}</p></div>
+            </div>
+            {% endfor %}
         </div>
-        <div class="title"><h5>{{ post.title }}</h5></div>
-        <div class="content"><p>{{ post.content|truncatewords:10 }}</p></div>
     </div>
-    {% endfor %}
     <div class="clear"></div>
     <div class="pagination">
         <span class="page-links">
-                <a href="?page=1"></a>
-                <a href="?page=2"></a>
+            <a href="#" class="prev"></a>
+            <a href="#" class="next"></a>
         </span>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliderContainer = document.querySelector('.slider-container');
+        const slider = document.querySelector('.slider');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+
+        const postWidth = 265; // Width of each post
+        let currentPosition = 0;
+
+        function moveSlider(direction) {
+            if (direction === 'next') {
+                currentPosition -= postWidth;
+                if (currentPosition < -postWidth * (slider.children.length - 1)) {
+                    currentPosition = 0;
+                }
+            } else if (direction === 'prev') {
+                currentPosition += postWidth;
+                if (currentPosition > 0) {
+                    currentPosition = -postWidth * (slider.children.length - 1);
+                }
+            }
+            slider.style.transform = `translateX(${currentPosition}px)`;
+        }
+
+        prevButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            moveSlider('prev');
+        });
+
+        nextButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            moveSlider('next');
+        });
+    });
+</script>

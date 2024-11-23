@@ -1,20 +1,22 @@
 from django import template
 from blog.models import Category, Post
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 register = template.Library()
 
 
 @register.simple_tag(name="totalposts")
 def total_posts():
-
-    posts = Post.objects.filter(status=1).count()
+    now = timezone.now()
+    posts = Post.objects.filter(status=1, published_at__lte=now).count()
     return posts
 
 
 @register.simple_tag(name="get_posts")
 def get_posts(page_number=1):
-    posts = Post.objects.filter(status=1).order_by("-created_at")
+    now = timezone.now()
+    posts = Post.objects.filter(status=1, published_at__lte=now).order_by("-created_at")
     paginator = Paginator(posts, 3)
     page = paginator.get_page(page_number)
     return page
@@ -27,13 +29,17 @@ def snippet(v, n):
 
 @register.inclusion_tag("blog/popularposts.html")
 def popularposts(n=3):
-    posts = Post.objects.filter(status=1).order_by("-counted_views")[0:n]
+    now = timezone.now()
+    posts = Post.objects.filter(status=1, published_at__lte=now).order_by(
+        "-counted_views"
+    )[0:n]
     return {"posts": posts}
 
 
 @register.inclusion_tag("blog/post-category.html")
 def post_category():
-    posts = Post.objects.filter(status=1)
+    now = timezone.now()
+    posts = Post.objects.filter(status=1, published_at__lte=now)
     categories = Category.objects.all()
     response = {}
     for name in categories:
@@ -44,4 +50,7 @@ def post_category():
 
 @register.simple_tag(name="get_last_posts")
 def get_last_post():
-    return Post.objects.filter(status=1).order_by("-created_at")[:6]
+    now = timezone.now()
+    return Post.objects.filter(status=1, published_at__lte=now).order_by("-created_at")[
+        :6
+    ]

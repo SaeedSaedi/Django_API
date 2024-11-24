@@ -1,71 +1,47 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
+
+{% block title %}Home - DevBlog{% endblock %}
 
 {% block content %}
-            <!-- Blog Post (Right Sidebar) Start -->
-            <div class="col-md-9">
-                <div class="col-md-12 page-body">
-                  <div class="row">
-                    
-                    <div class="sub-title">
-                      <nav class="navbar">
-                        <h2><a href="{% url 'blog:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">My Blog</a></h2>
-                        <h2><a href="{% url 'blog:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact Us</a></h2>
-                    </nav>
-                      <form action="{% url 'blog:search' %}" method="get">
-                        <input type="text" name="q" placeholder="Search..." />
-                        <button type="submit">search</button>
-                      </form>
-                    </div>
-                    <div class="col-md-12 content-page">
-                      {% for post in posts %}
-                      <!-- Blog Post Start -->
-                      <div class="col-md-12 blog-post">
-                        <div class="post-title">
-                            <h1>
-                              {{ post.title }}
-                            </h1>
-                        </div>
-                        <div class="post-info">
-                          <span>{{ post.created_at|date:"M Y" }} / views: {{ post.counted_views }} / author: <a href="{% url 'blog:author' post.author.username %}">{{ post.author.get_full_name }}</a> / category: {% for category in post.category.all %} <a href="{% url "blog:category" category.name %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-                        </div>
-                        <p>
-                          {{ post.content|truncatewords:50 }}
-                        </p>
-                        <img class="post-image" src="{{ post.image.url }}" alt="">
-                        <a href="{% url 'blog:post_detail' post.id %}" class="button button-style button-anim fa fa-long-arrow-right"><span>Read
-                            More</span></a>
-                      </div>
-                      
-                      {% endfor %}
-                      <div class="paginator">
-                        <span class="step-links">
-                          {% if posts.has_previous %}
-                            <a href="?page=1">&laquo; first</a>
-                            <a href="?page={{ posts.previous_page_number }}">previous</a>
-                          {% endif %}
-                          <span class="current">
-                            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
-                          </span>
-                          {% comment %} {% for i in posts.paginator.page_range %}
-                            <a href="?page={{ i }}">{{ i }}</a>
-                          {% endfor %} {% endcomment %}
-                          {% if posts.has_next %}
-                            <a href="?page={{ posts.next_page_number }}">next</a>
-                            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
-                          {% endif %}
-                      </div>
-                      {% include "blog/lastposts.html" %}
-                      <div class="clear"></div>
-                      {% include "blog/inc.html" %}
-                      <!-- Blog Post End -->
-                      
-                      
-                    </div>
-                  </div>
-                  
-                </div>
-              
-                <!-- Footer Start -->
-              </div>
-              <!-- Blog Post (Right Sidebar) End -->
+<div class="content-page">
+    <div class="sub-title">
+        <form class="search-form" action="{% url 'blog:search' %}" method="get">
+            <input type="text" name="q" placeholder="Search..." />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    {% for post in posts %}
+    <div class="blog-post">
+        <div class="post-title">
+            <h1><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></h1>
+        </div>
+        <div class="post-info">
+            <span>{{ post.created_at|date:"M Y" }} / views: {{ post.counted_views }} / author: <a href="{% url 'blog:author' post.author.username %}">{{ post.author.get_full_name }}</a> / category: {% for category in post.category.all %} <a href="{% url "blog:category" category.name %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+        </div>
+        <p>{{ post.content|truncatewords:50 }}</p>
+        <img class="post-image" src="{{ post.image.url }}" alt="">
+        <div class="clear"></div>
+        <a href="{% url 'blog:post_detail' post.id %}" class="button button-style button-anim fa fa-long-arrow-right"><span>Read More</span></a>
+    </div>
+    {% endfor %}
+    <div class="paginator">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ posts.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </span>
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">next</a>
+                <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% include "blog/lastposts.html" %}
+    <div class="clear"></div>
+    {% include "blog/inc.html" %}
+</div>
 {% endblock %}

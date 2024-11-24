@@ -1,7 +1,7 @@
 <ul>
-{% for name,count in category.items %}
+    {% for name, count in category.items %}
     <li>
-        <a href="{% url 'blog:category' name %}">{{name}} | {{count}}</a>
+        <a href="{% url 'blog:category' name %}">{{ name }} | {{ count }}</a>
     </li>
-{% endfor %}
+    {% endfor %}
 </ul>

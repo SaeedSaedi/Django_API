@@ -1,36 +1,26 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
 
+{% block title %}{{ post.title }} - DevBlog{% endblock %}
+
 {% block content %}
-<nav class="navbar">
-    <h2><a href="{% url 'blog:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">My Blog</a></h2>
-    <h2><a href="{% url 'blog:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact Us</a></h2>
-</nav>
 <div class="post-title">
     <h1>{{ post.title }}</h1> 
-   </div>
-   <!-- Post Headline End -->
-    
-    
-<!-- Post Detail Start -->
+</div>
 <div class="post-info">
     <span>{{ post.created_at|date:"M Y" }} / views: {{ post.counted_views }} / author: {{ post.author.get_full_name }}</span>
-   </div>
-   <!-- Post Detail End -->
-    
-    
-    <p>{{ post.content }}</p>
-    <img class="post-image" src="{{ post.image.url }}" alt="">
-    {% if next_post %}
-    <div class="next-post">
-        <a href="{% url 'blog:post_detail' next_post.id %}">Next post: {{ next_post.title}}</a>
-    </div>
-    {% endif %}
-    {% if prev_post %}
-    <div class="prev_post">
-        <a href="{% url 'blog:post_detail' prev_post.id %}">Previous post: {{ prev_post.title }}</a>
-    </div>
-    {% endif %}
-    <p>total posts: {% totalposts %}</p>
-    
+</div>
+<p>{{ post.content }}</p>
+<img class="post-image" src="{{ post.image.url }}" alt="">
+{% if next_post %}
+<div class="next-post">
+    <a href="{% url 'blog:post_detail' next_post.id %}">Next post: {{ next_post.title }}</a>
+</div>
+{% endif %}
+{% if prev_post %}
+<div class="prev_post">
+    <a href="{% url 'blog:post_detail' prev_post.id %}">Previous post: {{ prev_post.title }}</a>
+</div>
+{% endif %}
+<p>Total posts: {% totalposts %}</p>
 {% endblock %}

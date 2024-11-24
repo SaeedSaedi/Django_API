@@ -3,6 +3,7 @@ from django.utils import timezone
 from blog.models import Post
 from django.core.paginator import Paginator
 from landing.models import Contact
+from blog.forms import ContactForm
 
 
 # Create your views here.
@@ -54,10 +55,19 @@ def blog_search(request):
 
 
 def contact_us(request):
+    success_message = None
     if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-        print(name, email, message)
-
-    return render(request, "blog/contact.html")
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success_message = "Thank you! Your message has been sent successfully."
+            return render(
+                request,
+                "blog/contact.html",
+                {"form": ContactForm(), "success_message": success_message},
+            )
+    else:
+        form = ContactForm()
+    return render(
+        request, "blog/contact.html", {"form": form, "success_message": success_message}
+    )

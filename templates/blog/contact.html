@@ -1,18 +1,58 @@
 {% extends "blog/base.html" %}
 
-{% block title %}Contact Us - DevBlog{% endblock %}
-
 {% block content %}
 <div class="form-container">
+    {% if success_message %}
+    <div class="success-message">
+        <h2>Success!</h2>
+        <p>{{ success_message }}</p>
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{% url 'blog:index' %}";
+        }, 1000);
+    </script>
+    {% else %}
     <form action="{% url 'blog:contact' %}" method="POST">
         {% csrf_token %}
-        <label for="name" class="form-label">Name:</label>
-        <input type="text" id="name" name="name" class="form-input" />
-        <label for="email" class="form-label">Email:</label>
-        <input type="text" id="email" name="email" class="form-input" />
-        <label for="message" class="form-label">Message:</label>
-        <textarea id="message" name="message" class="form-textarea"></textarea>
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Name:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <div class="error-message">
+                {{ form.name.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="error-message">
+                {{ form.email.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.subject.id_for_label }}" class="form-label">Subject:</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+            <div class="error-message">
+                {{ form.subject.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.message.id_for_label }}" class="form-label">Message:</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+            <div class="error-message">
+                {{ form.message.errors }}
+            </div>
+            {% endif %}
+        </div>
         <button type="submit" class="form-button">Send</button>    
     </form>
+    {% endif %}
 </div>
 {% endblock %}

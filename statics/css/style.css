@@ -130,6 +130,10 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.form-group {
+    margin-bottom: 20px;
+}
+
 .form-label {
     display: block;
     margin-bottom: 8px;
@@ -141,7 +145,6 @@ footer {
 .form-textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -174,6 +177,37 @@ footer {
     border-color: #007BFF;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Success Message Styles */
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.success-message h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+}
+
+.success-message p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Error Message Styles */
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 /* Slider Styles */

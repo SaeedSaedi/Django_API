@@ -1,6 +1,11 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
+
 {% block content %}
+<nav class="navbar">
+    <h2><a href="{% url 'blog:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">My Blog</a></h2>
+    <h2><a href="{% url 'blog:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact Us</a></h2>
+</nav>
 <div class="post-title">
     <h1>{{ post.title }}</h1> 
    </div>

@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<nav class="navbar">
+    <h2><a href="{% url 'blog:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">My Blog</a></h2>
+    <h2><a href="{% url 'blog:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact Us</a></h2>
+</nav>
+<div class="form-container">
+    <form action="{% url 'blog:contact' %}" method="POST">
+        {% csrf_token %}
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" name="name" class="form-input" />
+        <label for="email" class="form-label">Email:</label>
+        <input type="text" id="email" name="email" class="form-input" />
+        <label for="message" class="form-label">Message:</label>
+        <textarea id="message" name="message" class="form-textarea"></textarea>
+        <button type="submit" class="form-button">Send</button>    
+    </form>
+</div>
+{% endblock %}

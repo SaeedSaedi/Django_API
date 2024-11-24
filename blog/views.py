@@ -50,3 +50,13 @@ def blog_search(request):
         status=1, published_at__lte=now, content__icontains=search_query
     )
     return render(request, "blog/home.html", context={"posts": posts})
+
+
+def contact_us(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        print(name, email, message)
+
+    return render(request, "blog/contact.html")

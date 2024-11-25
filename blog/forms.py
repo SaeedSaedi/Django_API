@@ -1,5 +1,5 @@
 from django import forms
-from landing.models import Contact
+from landing.models import Contact, Newsletter
 
 
 # blog/forms.py
@@ -21,3 +21,18 @@ class ContactForm(forms.ModelForm):
             "subject": forms.TextInput(attrs={"class": "form-input"}),
             "message": forms.Textarea(attrs={"class": "form-textarea"}),
         }
+
+
+class NewsletterForm(forms.ModelForm):
+    class Meta:
+        model = Newsletter
+        fields = ["email"]
+        widgets = {
+            "email": forms.EmailInput(attrs={"class": "form-input"}),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if Newsletter.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already subscribed.")
+        return email

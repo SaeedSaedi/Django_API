@@ -2,12 +2,24 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from blog.models import Post
 from django.core.paginator import Paginator
-from landing.models import Contact
-from blog.forms import ContactForm
+from blog.forms import ContactForm, NewsletterForm
+from django.contrib import messages
 
 
 # Create your views here.
 def index(request, cat_name=None, username=None):
+    if request.method == "POST":
+        form = NewsletterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Thank you for subscribing to our newsletter!")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error}")
+    else:
+        form = NewsletterForm()
+
     now = timezone.now()
     posts = Post.objects.filter(status=1, published_at__lte=now)
     if cat_name:
@@ -19,7 +31,9 @@ def index(request, cat_name=None, username=None):
     page_number = request.GET.get("page", 1)
     posts = posts.get_page(page_number)
 
-    return render(request, "blog/home.html", context={"posts": posts})
+    return render(
+        request, "blog/home.html", context={"posts": posts, "newsletter_form": form}
+    )
 
 
 def post_single(request, post_id):

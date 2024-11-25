@@ -80,6 +80,7 @@ def contact_us(request):
             messages.success(
                 request, "Thank you! Your message has been sent successfully."
             )
+            return redirect("blog:contact")
     else:
         form = ContactForm()
     return render(request, "blog/contact.html", {"form": form})

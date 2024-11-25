@@ -19,12 +19,25 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from landing.sitemaps import StaticViewSitemap
+from blog.sitemaps import BlogSitemap
 
+sitemaps = {
+    "static": StaticViewSitemap,
+    "blog": BlogSitemap
+}
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('blog.urls', namespace='blog')),
+    path("admin/", admin.site.urls),
+    path("", include("blog.urls", namespace="blog")),
     # path('', include('landing.urls')),
-    path('cv/', include('cv.urls')),
+    path("cv/", include("cv.urls")),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
 ]
 
 if settings.DEBUG:

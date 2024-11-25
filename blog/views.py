@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 from blog.models import Post
 from django.core.paginator import Paginator
@@ -13,6 +13,7 @@ def index(request, cat_name=None, username=None):
         if form.is_valid():
             form.save()
             messages.success(request, "Thank you for subscribing to our newsletter!")
+            return redirect('blog:contact:index')
         else:
             for field, errors in form.errors.items():
                 for error in errors:

@@ -22,6 +22,10 @@ class ContactForm(forms.ModelForm):
             "message": forms.Textarea(attrs={"class": "form-textarea"}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["subject"].required = False
+
 
 class NewsletterForm(forms.ModelForm):
     class Meta:

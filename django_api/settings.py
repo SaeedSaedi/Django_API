@@ -44,9 +44,15 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "landing.apps.LandingConfig",
     "cv.apps.CvConfig",
+    "robots"
 ]
 
 SITE_ID = 2
+
+
+ROBOTS_USE_HOST = False
+ROBOTS_USE_SITEMAP = False
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

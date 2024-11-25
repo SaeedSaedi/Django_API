@@ -13,7 +13,7 @@ def index(request, cat_name=None, username=None):
         if form.is_valid():
             form.save()
             messages.success(request, "Thank you for subscribing to our newsletter!")
-            return redirect('blog:contact:index')
+            return redirect("blog:index")
         else:
             for field, errors in form.errors.items():
                 for error in errors:
@@ -70,19 +70,13 @@ def blog_search(request):
 
 
 def contact_us(request):
-    success_message = None
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            success_message = "Thank you! Your message has been sent successfully."
-            return render(
-                request,
-                "blog/contact.html",
-                {"form": ContactForm(), "success_message": success_message},
+            messages.success(
+                request, "Thank you! Your message has been sent successfully."
             )
     else:
         form = ContactForm()
-    return render(
-        request, "blog/contact.html", {"form": form, "success_message": success_message}
-    )
+    return render(request, "blog/contact.html", {"form": form})

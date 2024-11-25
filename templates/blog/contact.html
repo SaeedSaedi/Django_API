@@ -2,17 +2,18 @@
 
 {% block content %}
 <div class="form-container">
-    {% if success_message %}
-    <div class="success-message">
-        <h2>Success!</h2>
-        <p>{{ success_message }}</p>
+    <!-- Display messages -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
     </div>
-    <script>
-        setTimeout(function() {
-            window.location.href = "{% url 'blog:index' %}";
-        }, 1000);
-    </script>
-    {% else %}
+    {% endif %}
+
+    <!-- Contact Form -->
     <form action="{% url 'blog:contact' %}" method="POST">
         {% csrf_token %}
         <div class="form-group">
@@ -53,6 +54,5 @@
         </div>
         <button type="submit" class="form-button">Send</button>    
     </form>
-    {% endif %}
 </div>
 {% endblock %}

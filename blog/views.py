@@ -73,6 +73,9 @@ def contact_us(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
+            contact_instance = form.save(commit=False)
+            contact_instance.name = "anonymous"
+            contact_instance.save()
             form.save()
             messages.success(
                 request, "Thank you! Your message has been sent successfully."

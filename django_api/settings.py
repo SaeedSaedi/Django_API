@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "blog.apps.BlogConfig",
     "landing.apps.LandingConfig",
+    "accounts.apps.AccountsConfig",
     "cv.apps.CvConfig",
     "robots",
     "debug_toolbar",
@@ -155,3 +156,22 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+# settings.py
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "accounts.backends.EmailBackend",
+]
+
+# settings.py
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "your_email_host"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "your_email_username"
+EMAIL_HOST_PASSWORD = "your_email_password"
+DEFAULT_FROM_EMAIL = "your_email_address"
+
+# Path to your email templates
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+PASSWORD_RESET_TEMPLATE = "accounts/password_reset_email.html"

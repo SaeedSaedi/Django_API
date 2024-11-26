@@ -14,8 +14,13 @@
             <nav class="navbar">
                 <h2><a href="{% url 'blog:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">My Blog</a></h2>
                 <h2><a href="{% url 'blog:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact Us</a></h2>
+                {% if user.is_authenticated %}
+                    <h2><a href="{% url 'accounts:logout' %}">Logout</a></h2>
+                {% else %}
+                    <h2><a href="{% url 'accounts:login' %}">Login</a></h2>
+                    <h2><a href="{% url 'accounts:register' %}">Register</a></h2>
+                {% endif %}
             </nav>
-            
         </header>
         <main>
             {% if messages %}

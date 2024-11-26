@@ -1,6 +1,6 @@
 from django import forms
 from landing.models import Contact, Newsletter
-
+from captcha.fields import CaptchaField
 
 # blog/forms.py
 # class ContactUsForm(forms.Form):
@@ -12,6 +12,8 @@ from landing.models import Contact, Newsletter
 
 
 class ContactForm(forms.ModelForm):
+    captcha = CaptchaField()
+
     class Meta:
         model = Contact
         fields = ["name", "email", "subject", "message"]

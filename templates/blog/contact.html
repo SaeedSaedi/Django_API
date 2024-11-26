@@ -41,6 +41,15 @@
             </div>
             {% endif %}
         </div>
+        <div class="form-group captcha">
+            <label for="{{ form.captcha.id_for_label }}" class="form-label">Captcha:</label>
+            {{ form.captcha }}
+            {% if form.captcha.errors %}
+            <div class="error-message">
+                {{ form.captcha.errors }}
+            </div>
+            {% endif %}
+        </div>
         <button type="submit" class="form-button">Send</button>    
     </form>
 </div>

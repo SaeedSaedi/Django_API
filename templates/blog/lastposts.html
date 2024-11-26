@@ -15,7 +15,7 @@
                     {% endfor %}
                 </div>
                 <div class="title"><h5><a href="{% url "blog:post_detail" post.id %}">{{ post.title }}</a></h5></div>
-                <div class="content"><p>{{ post.content|truncatewords:10 }}</p></div>
+                <div class="content"><p>{{ post.content|truncatewords:10|safe }}</p></div>
             </div>
             {% endfor %}
         </div>

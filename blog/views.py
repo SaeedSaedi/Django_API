@@ -4,6 +4,7 @@ from blog.models import Post
 from django.core.paginator import Paginator
 from blog.forms import ContactForm, NewsletterForm
 from django.contrib import messages
+from blog.forms import CommentForm
 
 
 # Create your views here.
@@ -42,6 +43,7 @@ def index(request, cat_name=None, username=None, tag_name=None):
 def post_single(request, post_id):
     now = timezone.now()
     post = get_object_or_404(Post, id=post_id, status=1, published_at__lte=now)
+    comments = post.comments.filter(approved=True).order_by("-created_at")
     next_post = (
         Post.objects.filter(id__gt=post.id, status=1, published_at__lte=now)
         .order_by("id")
@@ -53,12 +55,30 @@ def post_single(request, post_id):
         .first()
     )
 
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect("blog:post_detail", post_id=post.id)
+    else:
+        form = CommentForm()
+
+    context = {
+        "post": post,
+        "comments": comments,
+        "next_post": next_post,
+        "prev_post": prev_post,
+        "form": form,
+    }
+
     post.counted_views += 1
     post.save()
     return render(
         request,
         "blog/single.html",
-        context={"post": post, "next_post": next_post, "prev_post": prev_post},
+        context=context,
     )
 
 

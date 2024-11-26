@@ -31,6 +31,28 @@
 </div>
 {% endif %}
 <p>Total posts: {% totalposts %}</p>
+<div class="comment-section">
+    <h3>Comments</h3>
+    <ul class="comment-list">
+        {% for comment in comments %}
+        <li class="comment">
+            <div class="comment-author">{{ comment.name }}</div>
+            <div class="comment-subject">{{ comment.subject }}</div>
+            <div class="comment-content">{{ comment.message }}</div>
+            <div class="comment-date">{{ comment.created_at|date:"M d, Y H:i" }}</div>
+        </li>
+        {% empty %}
+        <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Add a Comment</h3>
+    <form method="post" class="comment-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="form-button">Submit Comment</button>
+    </form>
+</div>
 {% comment %} <div class="post-comment">
     <div id="disqus_thread"></div>
 <script>

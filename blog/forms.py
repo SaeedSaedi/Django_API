@@ -1,6 +1,7 @@
 from django import forms
 from landing.models import Contact, Newsletter
 from captcha.fields import CaptchaField
+from blog.models import Comment
 
 # blog/forms.py
 # class ContactUsForm(forms.Form):
@@ -42,3 +43,15 @@ class NewsletterForm(forms.ModelForm):
         if Newsletter.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already subscribed.")
         return email
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["name", "email", "subject", "message"]
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "subject": forms.TextInput(attrs={"class": "form-control"}),
+            "message": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+        }

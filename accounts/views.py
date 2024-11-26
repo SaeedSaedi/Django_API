@@ -70,8 +70,8 @@ def forgot_password_view(request):
                 use_https=request.is_secure(),
                 email_template_name="accounts/password_reset_email.html",
                 subject_template_name="accounts/password_reset_subject.txt",
-                from_email=None,  # Use the DEFAULT_FROM_EMAIL setting
-                html_email_template_name=None,  # Optional HTML email template
+                from_email=None,
+                html_email_template_name=None,
             )
             messages.success(
                 request,

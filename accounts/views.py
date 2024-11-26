@@ -1,11 +1,21 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import PasswordResetView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import CustomUserCreationForm
+from django.core.mail import send_mail
+from django.conf import settings
+from django.urls import reverse_lazy
+from django.contrib.auth.views import (
+    PasswordResetView,
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
 
 
 def login_view(request):
@@ -37,20 +47,31 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            user.email = form.cleaned_data.get("email")
+            user.save()
             username = form.cleaned_data.get("username")
+            # email = form.cleaned_data.get("email")
             messages.success(
                 request, f"Account created for {username}! You can now log in."
             )
+
+            # Send email notification
+            # subject = "Welcome to Our Site"
+            # message = f"Hello {username},\n\nThank you for registering on our site!"
+            # from_email = settings.DEFAULT_FROM_EMAIL
+            # recipient_list = [email]
+            # send_mail(subject, message, from_email, recipient_list)
+
             return redirect("accounts:login")
         else:
             messages.error(
                 request, "Registration failed. Please correct the errors below."
             )
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, "accounts/register.html", {"form": form})
 
 
@@ -58,7 +79,20 @@ class CustomPasswordResetView(PasswordResetView):
     template_name = "accounts/password_reset.html"
     email_template_name = "accounts/password_reset_email.html"
     subject_template_name = "accounts/password_reset_subject.txt"
-    success_url = "accounts:password_reset_done"
+    success_url = reverse_lazy("accounts:password_reset_done")
+
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "accounts/password_reset_done.html"
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = "accounts/password_reset_confirm.html"
+    success_url = reverse_lazy("accounts:password_reset_complete")
+
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = "accounts/password_reset_complete.html"
 
 
 def forgot_password_view(request):

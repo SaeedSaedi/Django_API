@@ -450,3 +450,57 @@ a:hover {
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+/* Container for the tags section */
+.tags {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tags heading */
+.tags p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Unordered list for tags */
+.tags ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Individual tag item */
+.tags li {
+    display: inline-block;
+}
+
+/* Tag link */
+.tags a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+/* Hover effect for tag links */
+.tags a:hover {
+    background-color: #0056b3;
+}
+
+/* Active state for tag links (if needed) */
+.tags a:active {
+    background-color: #004080;
+}

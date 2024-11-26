@@ -9,6 +9,7 @@ urlpatterns = [
     path("contact-us", contact_us, name="contact"),
     path("posts/<int:post_id>/", post_single, name="post_detail"),
     path("category/<str:cat_name>/", index, name="category"),
+    path("tag/<str:tag_name>/", index, name="tag"),
     path("author/<str:username>/", index, name="author"),
     path("search/", blog_search, name="search"),
 ]

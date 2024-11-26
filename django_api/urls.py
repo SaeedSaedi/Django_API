@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from landing.sitemaps import StaticViewSitemap
 from blog.sitemaps import BlogSitemap
+import debug_toolbar
 
 sitemaps = {
     "static": StaticViewSitemap,
@@ -39,6 +40,7 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
     path("robots.txt", include("robots.urls")),
+    path("__debug__/", include(debug_toolbar.urls)),
 ]
 
 if settings.DEBUG:

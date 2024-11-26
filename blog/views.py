@@ -7,7 +7,7 @@ from django.contrib import messages
 
 
 # Create your views here.
-def index(request, cat_name=None, username=None):
+def index(request, cat_name=None, username=None, tag_name=None):
     if request.method == "POST":
         form = NewsletterForm(request.POST)
         if form.is_valid():
@@ -27,6 +27,8 @@ def index(request, cat_name=None, username=None):
         posts = posts.filter(category__name=cat_name)
     if username:
         posts = posts.filter(author__username=username)
+    if tag_name:
+        posts = posts.filter(tags__name__in=[tag_name])
 
     posts = Paginator(posts, 2)
     page_number = request.GET.get("page", 1)

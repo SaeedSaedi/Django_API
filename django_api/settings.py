@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "landing.apps.LandingConfig",
     "cv.apps.CvConfig",
-    "robots"
+    "robots",
+    "debug_toolbar",
+    "taggit",
 ]
 
 SITE_ID = 2
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "django_api.urls"
@@ -144,3 +147,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+INTERNAL_IPS = ["127.0.0.1"]
